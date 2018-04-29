@@ -7,7 +7,6 @@ import Interface.Receipt;
 public class PreDecorator extends Decorator {
 
     AddOn a;
-    //Interface.Receipt r;
 
     public PreDecorator(Receipt r, AddOn a){
         super(r);

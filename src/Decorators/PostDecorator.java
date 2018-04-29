@@ -6,7 +6,7 @@ import Interface.Receipt;
 public class PostDecorator extends Decorator {
 
     AddOn a;
-    //Interface.Receipt r;
+
 
     public PostDecorator(Receipt r, AddOn a){
         super(r);
