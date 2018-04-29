@@ -9,9 +9,7 @@ public class Client {
 
     public static void main(String[] args) throws IOException {
 
-        //menu();
-        //menuChoice();
-        testDriver();
+        menuChoice();
 
 
     }
@@ -25,37 +23,57 @@ public class Client {
         System.out.println("5. Exit");
     }
 
-    public static void testDriver() throws IOException{
+
+    //This commented out section was use only for testing purposes, not part of the actual program
+    /*public static void testDriver() throws IOException{
         PurchasedItems purchasedItems = new PurchasedItems();
         AvailableItems availableItems = new AvailableItems();
         ReceiptFactory receipt = new ReceiptFactory();
-        Date date = new Date("15","August","2018");
+        Date date = new Date("15","Oct","2018");
         purchaseItem(availableItems,purchasedItems);
         Receipt finalReceipt = receipt.getReceipt(purchasedItems,date);
         finalReceipt.printReceipt();
-    }
+    }*/
 
     public static void menuChoice() throws IOException{
+        Scanner console = new Scanner(System.in);
         PurchasedItems purchasedItems = new PurchasedItems();
         AvailableItems availableItems = new AvailableItems();
         ReceiptFactory receipt = new ReceiptFactory();
-        Date date = new Date("21","Dec","2018");
-        Scanner console = new Scanner(System.in);
+
+        //Create date object from user input
+        System.out.println("Please enter current date");
+        System.out.println("Month: (e.g. Jan,Oct,Dec) >>");
+        String month = console.next();
+        System.out.println("Day: >>");
+        String day = console.next();
+        System.out.print("Year: >>");
+        String year = console.next();
+        Date date = new Date(day,month,year);
+
+        menu(); //Display user menu
         System.out.println(">>");
         int choice = console.nextInt();
         while(choice != 5){
             switch (choice) {
                 case 1:
+                    receipt = new ReceiptFactory(); //erases old receipt and starts a new one
+                    purchasedItems = new PurchasedItems();
                     break;
                 case 2:
-                    displayAvalItems(availableItems);
+                    displayAvalItems(availableItems); //display items aval to purchase
                     break;
                 case 3:
-                    purchaseItem(availableItems,purchasedItems);
+                    purchaseItem(availableItems,purchasedItems); //add items to purchasedItems, to be put on receipt
                     break;
                 case 4:
-                     Receipt finalReceipt = receipt.getReceipt(purchasedItems,date);
-                     finalReceipt.printReceipt();
+                    if(purchasedItems.isEmpty()){
+                        System.out.println("You have not chosen any items to purchase!\n\n");
+                    }
+                    else {
+                        Receipt finalReceipt = receipt.getReceipt(purchasedItems, date); //creates receipt and returns its to the user
+                        finalReceipt.printReceipt();
+                    }
                     break;
             }
             menu();
@@ -80,11 +98,9 @@ public class Client {
         Scanner console = new Scanner(System.in);
         System.out.println("Enter the item number you wish to purchase");
         System.out.println(">>");
-        String itemNum = "2113"; //remove these next two lines for finished product
-        String itemNum2 = "3124";
-        //String itemNum = console.next();
+        String itemNum = console.next();
         purchasedItems.addItem(findItem(availableItems,itemNum));
-        purchasedItems.addItem(findItem(availableItems,itemNum2));
+
     }
 
     public static StoreItem findItem(AvailableItems availableItems,String itemNum) {

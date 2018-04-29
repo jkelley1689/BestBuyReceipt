@@ -5,6 +5,7 @@ import TaxComputationClasses.*;
 import ItemsPackage.*;
 import Interface.*;
 import Decorators.*;
+import ForName.ForNameClass;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +16,8 @@ import java.util.Scanner;
 public class ReceiptFactory{
 
    StoreHeader storeHeader;
-   private ArrayList<TaxComputation> taxComputationsObjs = new ArrayList<>();
+   //private ArrayList<TaxComputation> taxComputationsObjs = new ArrayList<>();
+   private ForNameClass taxComputationsObjs = new ForNameClass();
    private ArrayList<AddOn> addOns = new ArrayList<>();
    private String[] arr;
    private Receipt receipt;
@@ -23,26 +25,28 @@ public class ReceiptFactory{
 
 
    public ReceiptFactory() throws IOException{
-       populateTaxArray();
+       //populateTaxArray();
        populateAddOns();
        saveStoreHeader();
-       tc = taxComputationsObjs.get(findIndex());
+       //tc = taxComputationsObjs.get(findIndex());
+       tc = taxComputationsObjs.getTCClass(storeHeader.getStateCode());
    }
 
    public Receipt getReceipt(PurchasedItems items, Date date){
        receipt = new BasicReceipt(items,date);
        ((BasicReceipt) receipt).setStoreHeader(storeHeader);
+       //((BasicReceipt) receipt).setTc(tc);
        ((BasicReceipt) receipt).setTc(tc);
        checkForAddOns(items);
        //addDecorators();
        return receipt;
    }
 
-   public void populateTaxArray(){
+   /*public void populateTaxArray(){
        taxComputationsObjs.add(new MarylandTax());
        taxComputationsObjs.add(new MassachusettsTax());
        taxComputationsObjs.add(new CaliforniaTax());
-   }
+   }*/
 
    public void populateAddOns(){
        addOns.add(new HolidayGreeting());
@@ -51,13 +55,13 @@ public class ReceiptFactory{
        addOns.add(new Coupon10PercentOff200());
    }
 
-   public int findIndex(){
+   /*public int findIndex(){
        for(int i = 0;i < taxComputationsObjs.size();i++){
            if(taxComputationsObjs.get(i).getStateCode().equals(storeHeader.getStateCode()))
                return i;
        }
        return -1;
-   }
+   }*/
 
    public void readConfigFile() throws IOException{
        List<String> fileList = new ArrayList<>();
@@ -88,9 +92,4 @@ public class ReceiptFactory{
            }
        }
    }
-
-  // public Interface.Receipt addDecorators(Decorators.PreDecorator preDecorator, Decorators.PostDecorator postDecorator){
-
-  // }
-
 }

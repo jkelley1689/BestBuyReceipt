@@ -27,7 +27,7 @@ public class MarylandTax extends TaxComputation {
     }
 
     public boolean taxHoliday(Date date){
-        return date.getMonth().equalsIgnoreCase("August") && taxDates.contains(date.getDay());
+        return date.getMonth().equalsIgnoreCase("Aug") && taxDates.contains(date.getDay());
     }
 
     public String getStateCode(){

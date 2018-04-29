@@ -44,4 +44,8 @@ public class PurchasedItems {
         currentIndex++;
         return item;
     }
+
+    public boolean isEmpty(){
+        return items.isEmpty();
+    }
 }

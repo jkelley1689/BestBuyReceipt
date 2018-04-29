@@ -41,7 +41,7 @@ public class BasicReceipt implements Receipt {
             System.out.println();
         }
         System.out.println("Cost                           " + "$" + preTaxCost);
-        System.out.printf(tc.getStateCode() + " Sales Tax " + tc.getRATE() + "                 " + "$" + "%.2f",tax );
+        System.out.printf(tc.getStateCode() + " Sales Tax " + tc.getRATE() + "              " + "$" + "%.2f",tax );
         System.out.println();
         System.out.printf("Total Sale                     " + "$" + "%.2f",total);
         System.out.println("\n\n\n");

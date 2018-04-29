@@ -7,19 +7,20 @@ import TaxComputationClasses.*;
 public class ForNameClass {
 
     private HashMap taxCompClasses = new HashMap<String,Class>();
+    private TaxComputation t;
 
     public ForNameClass(){
-        Class taxClass;
+            populateTaxCompHashTable();
+    }
 
+    public TaxComputation getTCClass(String stateCode){
+        Class taxClass;
         try{
             taxClass = Class.forName("TaxComputationClasses.MarylandTax");
 
-            populateTaxCompHashTable();
+            taxClass = (Class) taxCompClasses.get(stateCode);
 
-            taxClass = (Class) taxCompClasses.get("MD");
-
-            TaxComputation t = (TaxComputation)taxClass.newInstance();
-            System.out.println(t.getRATE());
+            t = (TaxComputation)taxClass.newInstance();
         }
         catch (ClassNotFoundException e){
             System.out.println("Class not found");
@@ -30,6 +31,7 @@ public class ForNameClass {
         catch (IllegalAccessException e) {
             System.out.println("Illegal Access Error");
         }
+        return t;
     }
 
     private void populateTaxCompHashTable(){
@@ -39,6 +41,8 @@ public class ForNameClass {
             taxCompClasses.put("MD",Class.forName(pkg + "MarylandTax"));
             taxCompClasses.put("CA",Class.forName(pkg + "CaliforniaTax"));
             taxCompClasses.put("MA",Class.forName(pkg + "MassachusettsTax"));
+            taxCompClasses.put("VA",Class.forName(pkg + "VirginiaTax"));
+            taxCompClasses.put("DE",Class.forName(pkg + "DelawareTax"));
         }
         catch (ClassNotFoundException e){
             System.out.println("Tax Computation Class Error");
